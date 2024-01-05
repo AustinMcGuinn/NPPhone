@@ -16,9 +16,6 @@ export type ColorRange = {
 export type ExtendedColors = {
   primary: ColorRange;
   secondary: ColorRange;
-  tertiary: ColorRange;
-  sand: ColorRange;
-  quaternary: ColorRange;
   background: string;
   foreground: string;
   white: string;
@@ -54,9 +51,9 @@ export type ExtendedTheme = Omit<DefaultThemeType, 'colors'> & {
 };
 
 export const palette = {
-  primary: '#475468',
-  secondary: '#014f7c',
-  background: 'rgb(255, 255, 255)',
+  primary: '#207573',
+  secondary: '#ff6a00',
+  background: 'rgb(18, 21, 26)',
   white: '#fff',
   black: '#101214',
   button: '#1c1e21',
@@ -66,7 +63,7 @@ export const palette = {
   borderColorDark: '#333942',
   placeholder: '#a1a1a1',
   danger: 'rgb(208, 2, 27)',
-  title: 'rgb(255, 255, 255)',
+  title: 'rgb(102, 102, 102)',
   separator: 'rgb(194, 194, 195)',
   highlight: 'rgb(199, 198, 203)',
   blackOverlay: 'rgba(0,0,0,0.6)',
@@ -78,8 +75,8 @@ export const palette = {
   transparent: 'transparent',
   calpyse: '#2b7488',
   notification: 'rgb(27, 29, 33)',
-  border: 'rgb(255, 255, 255)',
-  card: 'rgb(255, 255, 255)',
+  border: 'rgb(27, 29, 33)',
+  card: 'rgb(27, 29, 33)',
 };
 
 export const LightTheme = {
@@ -94,28 +91,28 @@ export const LightTheme = {
     tabBar: 'rgb(255, 255, 255)',
     foreground: '#ffffff',
     primary: {
-      half: '#A5B0C2',
-      one: '#99A6B9',
-      two: '#8190A9',
-      three: '#687B98',
-      four: '#586880',
-      five: '#475468',
-      six: '#303947',
-      seven: '#191E25',
-      eight: '#030304',
-      nine: '#000000',
+      half: '#dee3ea',
+      one: '#dee3ea',
+      two: '#b2bdcd',
+      three: '#5d7290',
+      four: '#5d7290',
+      five: '#5d7290',
+      six: '#323d4d',
+      seven: '#242c37',
+      eight: '#151a21',
+      nine: '#0b0e11',
     },
     secondary: {
-      half: '#37B5FD',
-      one: '#23ADFD',
-      two: '#029CF5',
-      three: '#0283CD',
-      four: '#0169A4',
-      five: '#014F7C',
-      six: '#012C44',
-      seven: '#00080D',
-      eight: '#000000',
-      nine: '#000000',
+      half: '#979eab',
+      one: '#979eab',
+      two: '#1b1d20',
+      three: '#121419',
+      four: '#f9f9f9',
+      five: '#2f323f',
+      six: '#959fad',
+      seven: '#ededed',
+      eight: '#207573',
+      nine: '#1b1d21',
     },
   },
 };
