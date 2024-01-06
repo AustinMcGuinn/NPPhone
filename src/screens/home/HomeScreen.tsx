@@ -1,6 +1,7 @@
 import React from 'react';
 import {ImageBackground, SafeAreaView, Text, View} from 'react-native';
 import tw from '../../../tailwind';
+import AppButton from '../../components/AppButton';
 
 const HomeScreen = () => {
   const buttons = [
@@ -26,9 +27,7 @@ const HomeScreen = () => {
         {buttons
           .slice(rowIndex * 4, (rowIndex + 1) * 4)
           .map((button, index) => (
-            <Text key={index} style={tw`text-white`}>
-              {button.title}
-            </Text>
+            <AppButton key={index} />
           ))}
       </View>
     ));
