@@ -1,13 +1,25 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // Theme
 import tw from '../../tailwind';
 
 interface ButtonProps {
   icon: string;
+  iconType:
+    | 'Entypo'
+    | 'Ionicons'
+    | 'FontAwesome5'
+    | 'FontAwesome6'
+    | 'FontAwesome'
+    | 'MaterialCommunityIcons';
   bgColor: string;
   navWhere?: any;
   disabled?: boolean;
@@ -15,7 +27,7 @@ interface ButtonProps {
 
 const AppButton = (props: ButtonProps) => {
   const navigation = useNavigation();
-  const {icon, bgColor, navWhere, disabled} = props;
+  const {icon, iconType, bgColor, navWhere, disabled} = props;
 
   return (
     <TouchableOpacity
@@ -34,9 +46,9 @@ const AppButton = (props: ButtonProps) => {
             position: 'absolute',
             top: 10,
             left: -7,
-            width: 150, // adjust size as needed
-            height: 150, // adjust size as needed
-            borderRadius: 75, // half of width/height to make it a circle
+            width: 150,
+            height: 150,
+            borderRadius: 75,
             overflow: 'hidden',
           },
         ]}
@@ -48,14 +60,35 @@ const AppButton = (props: ButtonProps) => {
             position: 'absolute',
             top: 30,
             left: 10,
-            width: 150, // adjust size as needed
-            height: 150, // adjust size as needed
-            borderRadius: 75, // half of width/height to make it a circle
+            width: 150,
+            height: 150,
+            borderRadius: 75,
             overflow: 'hidden',
           },
         ]}
       />
-      <Entypo name={icon} size={30} style={{color: '#ffffff'}} />
+      {iconType === 'Ionicons' && (
+        <Ionicons name={icon} size={35} style={{color: '#ffffff'}} />
+      )}
+      {iconType === 'Entypo' && (
+        <Entypo name={icon} size={35} style={{color: '#ffffff'}} />
+      )}
+      {iconType === 'FontAwesome5' && (
+        <FontAwesome5 name={icon} size={35} style={{color: '#ffffff'}} />
+      )}
+      {iconType === 'FontAwesome6' && (
+        <FontAwesome6 name={icon} size={35} style={{color: '#ffffff'}} />
+      )}
+      {iconType === 'FontAwesome' && (
+        <FontAwesome name={icon} size={35} style={{color: '#ffffff'}} />
+      )}
+      {iconType === 'MaterialCommunityIcons' && (
+        <MaterialCommunityIcons
+          name={icon}
+          size={35}
+          style={{color: '#ffffff'}}
+        />
+      )}
     </TouchableOpacity>
   );
 };

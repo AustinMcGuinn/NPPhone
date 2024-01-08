@@ -6,15 +6,18 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {ThemeContextProvider} from './src/context/ThemeContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import RootStackNavigation from './src/navigation/RootStackNavigation';
+import {AuthProvider} from './src/context/AuthContext';
 
 function App(): React.JSX.Element {
   return (
     <ThemeContextProvider>
-      <GestureHandlerRootView style={{flex: 1}}>
-        <BottomSheetModalProvider>
-          <RootStackNavigation />
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
+      <AuthProvider>
+        <GestureHandlerRootView style={{flex: 1}}>
+          <BottomSheetModalProvider>
+            <RootStackNavigation />
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
+      </AuthProvider>
     </ThemeContextProvider>
   );
 }
