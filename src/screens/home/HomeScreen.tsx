@@ -2,6 +2,8 @@ import React from 'react';
 import {ImageBackground, SafeAreaView, Text, View} from 'react-native';
 import tw from '../../../tailwind';
 import AppButton from '../../components/AppButton';
+import {useNotification} from '../../context/NotificationContext';
+import Button from '../../components/ui/Button';
 
 const HomeScreen = () => {
   const buttons = [
@@ -120,6 +122,12 @@ const HomeScreen = () => {
 
   let currentDate = `${day}/${month}/${year}`;
 
+  const showNotification = useNotification();
+
+  const handlePress = () => {
+    showNotification('Header Text', 'This is a description');
+  };
+
   return (
     <ImageBackground
       source={require('../../assets/home-background.jpg')}
@@ -133,7 +141,10 @@ const HomeScreen = () => {
             <Text style={tw`text-white`}>{currentDate}</Text>
           </View>
           {/* App buttons */}
-          <View style={tw`flex-7`}>{renderButtonRows()}</View>
+          <View style={tw`flex-7`}>
+            {renderButtonRows()}
+            <Button callFunc={handlePress} title="Show Notification" />
+          </View>
           {/* App bar */}
           <View style={tw`flex-2`}>
             <View

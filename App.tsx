@@ -7,6 +7,7 @@ import {ThemeContextProvider} from './src/context/ThemeContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import RootStackNavigation from './src/navigation/RootStackNavigation';
 import {AuthProvider} from './src/context/AuthContext';
+import {NotificationProvider} from './src/context/NotificationContext';
 
 function App(): React.JSX.Element {
   return (
@@ -14,7 +15,9 @@ function App(): React.JSX.Element {
       <AuthProvider>
         <GestureHandlerRootView style={{flex: 1}}>
           <BottomSheetModalProvider>
-            <RootStackNavigation />
+            <NotificationProvider>
+              <RootStackNavigation />
+            </NotificationProvider>
           </BottomSheetModalProvider>
         </GestureHandlerRootView>
       </AuthProvider>
