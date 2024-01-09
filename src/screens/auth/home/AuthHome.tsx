@@ -1,9 +1,7 @@
 import React from 'react';
 import {View, SafeAreaView, Text, TouchableOpacity, Image} from 'react-native';
 import tw from '../../../../tailwind';
-import {authorize} from 'react-native-app-auth';
 import {useAuth} from '../../../context/AuthContext';
-import {storeData} from '../../../context/AsyncStore';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 

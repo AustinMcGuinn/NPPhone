@@ -10,6 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 // Theme
 import tw from '../../tailwind';
+import {useNotification} from '../context/NotificationContext';
 
 interface ButtonProps {
   icon: string;
@@ -27,6 +28,7 @@ interface ButtonProps {
 
 const AppButton = (props: ButtonProps) => {
   const navigation = useNavigation();
+  const showNotification = useNotification();
   const {icon, iconType, bgColor, navWhere, disabled} = props;
 
   return (
@@ -37,6 +39,8 @@ const AppButton = (props: ButtonProps) => {
         if (navWhere !== undefined && !disabled) {
           // @ts-ignore
           navigation.navigate(navWhere);
+        } else {
+          showNotification('App unavaliable', 'This app is not available yet.');
         }
       }}>
       <View

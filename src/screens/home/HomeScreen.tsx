@@ -2,8 +2,6 @@ import React from 'react';
 import {ImageBackground, SafeAreaView, Text, View} from 'react-native';
 import tw from '../../../tailwind';
 import AppButton from '../../components/AppButton';
-import {useNotification} from '../../context/NotificationContext';
-import Button from '../../components/ui/Button';
 
 const HomeScreen = () => {
   const buttons = [
@@ -17,73 +15,61 @@ const HomeScreen = () => {
       icon: 'location-arrow',
       iconType: 'FontAwesome6',
       bgColor: 'bg-pink-500',
-      navWhere: 'Home',
     },
     {
       icon: 'mail',
       iconType: 'Ionicons',
       bgColor: 'bg-cyan-400',
-      navWhere: 'Home',
     },
     {
       icon: 'briefcase',
       iconType: 'Ionicons',
       bgColor: 'bg-yellow-200',
-      navWhere: 'Home',
     },
     {
       icon: 'twitter',
       iconType: 'Entypo',
       bgColor: 'bg-red-400',
-      navWhere: 'Home',
     },
     {
       icon: 'garage-variant',
       iconType: 'MaterialCommunityIcons',
       bgColor: 'bg-green-400',
-      navWhere: 'Home',
     },
     {
       icon: 'folder-open',
       iconType: 'FontAwesome',
       bgColor: 'bg-yellow-400',
-      navWhere: 'Home',
     },
     {
       icon: 'chart-column',
       iconType: 'FontAwesome6',
       bgColor: 'bg-teal-400',
-      navWhere: 'Home',
     },
     {
       icon: 'group',
       iconType: 'FontAwesome',
       bgColor: 'bg-purple-400',
-      navWhere: 'Home',
     },
     {
       icon: 'calendar-clear',
       iconType: 'Ionicons',
       bgColor: 'bg-amber-400',
-      navWhere: 'Home',
     },
     {
       icon: 'logo-google',
       iconType: 'Ionicons',
       bgColor: 'bg-green-300',
-      navWhere: 'Home',
     },
     {
       icon: 'bus-simple',
       iconType: 'FontAwesome6',
       bgColor: 'bg-orange-500',
-      navWhere: 'Home',
     },
     {
       icon: 'calculator',
       iconType: 'FontAwesome6',
       bgColor: 'bg-blue-400',
-      navWhere: 'Home',
     },
     {
       icon: 'cog',
@@ -122,12 +108,6 @@ const HomeScreen = () => {
 
   let currentDate = `${day}/${month}/${year}`;
 
-  const showNotification = useNotification();
-
-  const handlePress = () => {
-    showNotification('Header Text', 'This is a description');
-  };
-
   return (
     <ImageBackground
       source={require('../../assets/home-background.jpg')}
@@ -141,10 +121,7 @@ const HomeScreen = () => {
             <Text style={tw`text-white`}>{currentDate}</Text>
           </View>
           {/* App buttons */}
-          <View style={tw`flex-7`}>
-            {renderButtonRows()}
-            <Button callFunc={handlePress} title="Show Notification" />
-          </View>
+          <View style={tw`flex-7`}>{renderButtonRows()}</View>
           {/* App bar */}
           <View style={tw`flex-2`}>
             <View

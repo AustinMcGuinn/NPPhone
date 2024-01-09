@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -13,10 +13,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
+import ContactNewModal from './ContactNewModal';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {useNotification} from '../../context/NotificationContext';
 
 type ContactProps = {id: number; name: string; number: string};
 
 const Contact = ({id, name, number}: ContactProps) => {
+  const showNotification = useNotification();
   const getInitials = (nameString: string) => {
     const words = nameString.split(' ');
     const initials = words
@@ -29,8 +33,8 @@ const Contact = ({id, name, number}: ContactProps) => {
   const initials = getInitials(name);
 
   return (
-    <TouchableOpacity
-      onPress={() => console.log('Message button pressed')}
+    <View
+      key={id}
       style={tw`flex-row rounded-lg justify-between my-2 bg-[#262631]`}>
       <View style={tw`flex-row`}>
         <View
@@ -53,10 +57,15 @@ const Contact = ({id, name, number}: ContactProps) => {
       </View>
       <View style={tw`mr-2 items-center justify-center my-auto`}>
         <TouchableOpacity
-          onPress={() => console.log('Message button pressed')}
+          onPress={() =>
+            showNotification(
+              'Action unavaliable',
+              'You cant call someone, dumbass.',
+            )
+          }
           style={tw`bg-[#4dc3a5] p-2 rounded-lg items-center justify-center mb-1`}>
           <FontAwesome6
-            name={'message'}
+            name={'phone'}
             size={15}
             color="#a6e1d2"
             style={tw`ml-0.5`}
@@ -75,11 +84,16 @@ const Contact = ({id, name, number}: ContactProps) => {
           />
         </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
 const ContactsListScreen = () => {
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const handlePresentPress = async () => {
+    // @ts-ignore
+    bottomSheetModalRef.current.openModal();
+  };
   const contacts = [
     {
       id: 1,
@@ -94,45 +108,48 @@ const ContactsListScreen = () => {
   ];
 
   return (
-    <View style={tw`flex-1  bg-[rgba(24,24,36,255)]`}>
-      <SafeAreaView style={tw`flex-1 m-7`}>
-        <View style={tw`mt-5 flex-row justify-between`}>
-          <Text style={tw`text-white text-2xl font-medium`}>Contacts</Text>
-          <TouchableOpacity
-            onPress={() => console.log('New contact button pressed')}
-            style={tw`bg-[#4dc3a5] p-2 rounded-lg items-center justify-center h-10 w-10`}>
-            <Ionicons
-              name={'person-add'}
-              size={23}
-              color="#266152"
-              style={[tw`ml-0.5`, {transform: [{rotateY: '180deg'}]}]}
+    <>
+      <View style={tw`flex-1  bg-[rgba(24,24,36,255)]`}>
+        <SafeAreaView style={tw`flex-1 m-7`}>
+          <View style={tw`mt-5 flex-row justify-between`}>
+            <Text style={tw`text-white text-3xl font-medium`}>Contacts</Text>
+            <TouchableOpacity
+              onPress={handlePresentPress}
+              style={tw`bg-[#4dc3a5] p-2 rounded-lg items-center justify-center h-10 w-10`}>
+              <Ionicons
+                name={'person-add'}
+                size={23}
+                color="#266152"
+                style={[tw`ml-0.5`, {transform: [{rotateY: '180deg'}]}]}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={tw`relative mt-5`}>
+            <TextInput
+              style={tw`border-4 border-[#262631] rounded-lg p-3 text-white text-xl`}
+              placeholder="Search"
+              placeholderTextColor="#757575"
             />
-          </TouchableOpacity>
-        </View>
-        <View style={tw`relative mt-5`}>
-          <TextInput
-            style={tw`border-4 border-[#262631] rounded-lg p-3 text-white text-xl`}
-            placeholder="Search"
-            placeholderTextColor="#757575"
-          />
-          <TouchableOpacity
-            style={tw`absolute right-3 top-3 p-2 bg-[#2b2b39] rounded-lg items-center justify-center`}
-            onPress={() => console.log('Search button pressed')}>
-            <FontAwesome5 name="search" size={20} color="#60606b" />
-          </TouchableOpacity>
-        </View>
-        <View style={tw`flex-1 mt-5`}>
-          <FlatList
-            data={contacts}
-            renderItem={({item}) => (
-              <Contact id={item.id} name={item.name} number={item.number} />
-            )}
-            style={tw`flex-1`}
-          />
-        </View>
-        <HomeButton />
-      </SafeAreaView>
-    </View>
+            <TouchableOpacity
+              style={tw`absolute right-3 top-3 p-2 bg-[#2b2b39] rounded-lg items-center justify-center`}
+              onPress={() => console.log('Search button pressed')}>
+              <FontAwesome5 name="search" size={20} color="#60606b" />
+            </TouchableOpacity>
+          </View>
+          <View style={tw`flex-1 mt-5`}>
+            <FlatList
+              data={contacts}
+              renderItem={({item}) => (
+                <Contact id={item.id} name={item.name} number={item.number} />
+              )}
+              style={tw`flex-1`}
+            />
+          </View>
+          <HomeButton />
+        </SafeAreaView>
+      </View>
+      <ContactNewModal ref={bottomSheetModalRef} />
+    </>
   );
 };
 

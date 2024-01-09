@@ -45,7 +45,7 @@ const InfoScreen = () => {
       style={tw`flex-1`}>
       <SafeAreaView style={tw`flex-1 m-7`}>
         {/* Time and date */}
-        <Text style={tw`text-white text-3xl font-medium`}>Details</Text>
+        <Text style={tw`text-white text-3xl font-medium mt-5`}>Details</Text>
         {/*  */}
         <View style={tw`mt-6`}>
           <Text style={tw`text-white text-2xl font-medium mb-2`}>Info</Text>
