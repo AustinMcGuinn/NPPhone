@@ -81,23 +81,33 @@ const HomeScreen = () => {
 
   const renderButtonRows = () => {
     const numberOfRows = Math.ceil(buttons.length / 4);
-    return Array.from({length: numberOfRows}).map((_, rowIndex) => (
-      <View key={rowIndex} style={tw`flex-row justify-start gap-x-5 mb-4`}>
-        {buttons
-          .slice(rowIndex * 4, (rowIndex + 1) * 4)
-          .map((button, index) => (
-            <AppButton
-              key={index}
-              icon={button.icon}
-              iconType={
-                button.iconType as 'Ionicons' | 'Entypo' | 'FontAwesome5'
-              }
-              bgColor={button.bgColor}
-              navWhere={button.navWhere}
-            />
+    return Array.from({length: numberOfRows}).map((_, rowIndex) => {
+      // Calculate the number of items in the current row
+      const numberOfItemsInRow =
+        rowIndex < numberOfRows - 1 ? 4 : buttons.length % 4 || 4;
+
+      // Create a row with buttons and empty views as needed
+      return (
+        <View key={rowIndex} style={tw`flex-row justify-around mb-4`}>
+          {buttons
+            .slice(rowIndex * 4, (rowIndex + 1) * 4)
+            .map((button, index) => (
+              <AppButton
+                key={index}
+                icon={button.icon}
+                iconType={
+                  button.iconType as 'Ionicons' | 'Entypo' | 'FontAwesome5'
+                }
+                bgColor={button.bgColor}
+                navWhere={button.navWhere}
+              />
+            ))}
+          {Array.from({length: 4 - numberOfItemsInRow}).map((_, index) => (
+            <View key={index} style={tw`w-17 h-17`} />
           ))}
-      </View>
-    ));
+        </View>
+      );
+    });
   };
 
   const date = new Date();
@@ -114,7 +124,7 @@ const HomeScreen = () => {
       resizeMode="cover"
       style={tw`flex-1`}>
       <View style={tw`flex-1 bg-black/20`}>
-        <SafeAreaView style={tw`flex-1 m-7`}>
+        <SafeAreaView style={tw`flex-1 m-5`}>
           {/* Time and date */}
           <View style={tw`flex-3 items-center justify-center`}>
             <Text style={tw`text-white text-6xl font-medium`}>04:20</Text>
