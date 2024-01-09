@@ -5,6 +5,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../screens/home/HomeScreen';
 import SettingsScreen from '../screens/settings/SettingsScreen';
 import InfoScreen from '../screens/info/InfoScreen';
+import MessageListScreen from '../screens/messages/MessageListScreen';
+import ContactsListScreen from '../screens/contacts/ContactsListScreen';
 
 const MainStack = createNativeStackNavigator();
 
@@ -18,6 +20,8 @@ const MainStackNavigation = () => {
       <MainStack.Screen name="Home" component={HomeScreen} />
       <MainStack.Screen name="Settings" component={SettingsScreen} />
       <MainStack.Screen name="Info" component={InfoScreen} />
+      <MainStack.Screen name="MessageList" component={MessageListScreen} />
+      <MainStack.Screen name="ContactsList" component={ContactsListScreen} />
     </MainStack.Navigator>
   );
 };

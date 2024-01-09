@@ -17,7 +17,7 @@ const RootStackNavigation = () => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
 
-  const {auth} = authContext;
+  const {auth, character} = authContext;
 
   return (
     <RootStack.Navigator
@@ -25,7 +25,7 @@ const RootStackNavigation = () => {
         headerShown: false,
         animation: 'none',
       }}>
-      {auth === null ? (
+      {auth === null || character === null ? (
         <RootStack.Screen name="Auth" component={AuthStackNavigation} />
       ) : (
         <RootStack.Screen name="Main" component={MainStackNavigation} />

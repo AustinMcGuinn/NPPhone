@@ -158,13 +158,13 @@ const HomeScreen = () => {
               <AppButton
                 icon={'chatbox-ellipses'}
                 bgColor={'bg-blue-400'}
-                navWhere={'Home'}
+                navWhere={'MessageList'}
                 iconType="Ionicons"
               />
               <AppButton
                 icon={'address-book'}
                 bgColor={'bg-orange-400'}
-                navWhere={'Home'}
+                navWhere={'ContactsList'}
                 iconType="FontAwesome"
               />
               <AppButton

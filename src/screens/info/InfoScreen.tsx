@@ -41,7 +41,7 @@ const InfoScreen = () => {
 
   return (
     <LinearGradient
-      colors={['#312e81', '#1e1b4b', '#312e81', '#1e1b4b']}
+      colors={['#20293F', '#191a28', '#202b41']}
       style={tw`flex-1`}>
       <SafeAreaView style={tw`flex-1 m-7`}>
         {/* Time and date */}
