@@ -139,7 +139,6 @@ const HomeScreen = () => {
               <AppButton
                 icon={'phone'}
                 bgColor={'bg-green-400'}
-                navWhere={'Home'}
                 iconType="FontAwesome5"
               />
               <AppButton
@@ -157,7 +156,6 @@ const HomeScreen = () => {
               <AppButton
                 icon={'camera'}
                 bgColor={'bg-pink-400'}
-                navWhere={'Home'}
                 iconType="Entypo"
               />
             </View>

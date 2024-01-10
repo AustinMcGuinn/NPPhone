@@ -1,10 +1,12 @@
 import React, {createContext, useState, useContext, useCallback} from 'react';
 import AnimatedNotification from '../components/AnimatedNotification';
+import {View} from 'react-native';
 
 type NotificationType = {
+  id: number;
   header: string;
   description: string;
-} | null;
+};
 
 const NotificationContext = createContext<
   | {
@@ -13,29 +15,58 @@ const NotificationContext = createContext<
   | undefined
 >(undefined);
 
-export const NotificationProvider = ({children}) => {
-  const [notification, setNotification] = useState<NotificationType>(null);
+type Props = {
+  children: string | JSX.Element | JSX.Element[];
+};
 
-  // Using useCallback to ensure this function identity is stable
+export const NotificationProvider = ({children}: Props) => {
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
+
   const showNotification = useCallback(
     (header: string, description: string) => {
-      setNotification({header, description});
+      const newNotification = {
+        id: Date.now(), // Unique ID for each notification
+        header,
+        description,
+      };
 
-      // Set a timeout to hide the notification
-      const timeout = setTimeout(() => {
-        setNotification(null);
+      setNotifications(prevNotifications => [
+        newNotification,
+        ...prevNotifications,
+      ]);
+
+      // Set a timeout to remove the notification
+      setTimeout(() => {
+        setNotifications(prevNotifications =>
+          prevNotifications.filter(
+            notification => notification.id !== newNotification.id,
+          ),
+        );
       }, 5000);
-
-      // Clear the timeout when the notification is set to null
-      return () => clearTimeout(timeout);
     },
     [],
   );
 
+  const removeNotification = useCallback((id: number) => {
+    setNotifications(prevNotifications =>
+      prevNotifications.filter(notification => notification.id !== id),
+    );
+  }, []);
+
   return (
     <NotificationContext.Provider value={{showNotification}}>
       {children}
-      {notification && <AnimatedNotification {...notification} />}
+      <View
+        style={{position: 'absolute', top: 0, left: 0, right: 0, zIndex: 1000}}>
+        {notifications.map((notification, index) => (
+          <AnimatedNotification
+            key={notification.id}
+            index={index}
+            {...notification}
+            onHide={() => removeNotification(notification.id)}
+          />
+        ))}
+      </View>
     </NotificationContext.Provider>
   );
 };

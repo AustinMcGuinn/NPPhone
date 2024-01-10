@@ -7,6 +7,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 interface AnimatedNotificationProps {
   header: string;
   description: string;
+  index: number;
   type?: 'info' | 'success' | 'error' | 'message';
   onHide?: () => void;
 }
@@ -14,6 +15,7 @@ interface AnimatedNotificationProps {
 const AnimatedNotification = ({
   header,
   description,
+  index,
   onHide,
 }: AnimatedNotificationProps) => {
   const translateY = useRef(new Animated.Value(-150)).current;
@@ -22,8 +24,9 @@ const AnimatedNotification = ({
 
   // Animate in
   useEffect(() => {
+    const position = index * 70; // Assuming each notification is approx 70 units high
     Animated.timing(translateY, {
-      toValue: 0,
+      toValue: position,
       duration: 300,
       useNativeDriver: true,
     }).start();
@@ -32,7 +35,7 @@ const AnimatedNotification = ({
     const timer = setTimeout(() => setIsVisible(false), 5000);
 
     return () => clearTimeout(timer);
-  }, [translateY]);
+  }, [translateY, index]);
 
   // Animate out
   useEffect(() => {
@@ -59,7 +62,7 @@ const AnimatedNotification = ({
   return (
     <Animated.View
       style={[
-        tw`absolute top-15 left-0 right-0 z-1000`,
+        tw`absolute top-15 left-0 right-0 z-1000 mb-2`,
         {transform: [{translateY}]},
       ]}>
       <View style={tw`w-full items-center justify-center`}>

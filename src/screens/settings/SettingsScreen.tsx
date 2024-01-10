@@ -5,6 +5,7 @@ import {useAuth} from '../../context/AuthContext';
 import LinearGradient from 'react-native-linear-gradient';
 import HomeButton from '../../components/ui/HomeButton';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {useNotification} from '../../context/NotificationContext';
 
 const SettingsScreen = () => {
   const authContext = useAuth();
@@ -13,11 +14,13 @@ const SettingsScreen = () => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   const {signOut} = authContext;
+  const showNotification = useNotification();
 
   const buttons = [
     {
       text: 'Appearance',
-      onPress: () => console.log('Appearance'),
+      onPress: () =>
+        showNotification('App unavaliable', 'This app is not available yet.'),
       icon: 'cog',
     },
     {
