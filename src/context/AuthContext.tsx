@@ -73,9 +73,32 @@ export const AuthProvider = ({children}) => {
 
       await storeData('jwt', authResult.refreshToken);
       setAuth(authResult);
-      console.log(authResult);
+
+      // Fetch user data from Discord
+      const userData = await fetchUserData(authResult.accessToken);
+      //setCharacter(userData); // Assuming you want to store this in 'character'
+      console.log(userData);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const fetchUserData = async (accessToken: string) => {
+    try {
+      const response = await fetch('https://discord.com/api/users/@me', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+
+      const data = await response.json();
+      return data; // This contains user's data like email, username, etc.
+    } catch (error) {
+      console.error('Error fetching user data:', error);
     }
   };
 

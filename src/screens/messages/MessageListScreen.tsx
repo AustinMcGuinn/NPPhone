@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -14,6 +14,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import MessageNewModal from './MessageNewModal';
+import {useUserService} from '../../services/UserService';
 
 type MessageProps = {id: number; name: string; text: string};
 
@@ -54,18 +55,24 @@ const MessageListScreen = () => {
     // @ts-ignore
     bottomSheetModalRef.current.openModal();
   };
-  const messages = [
-    {
-      id: 1,
-      name: 'Austin Bean',
-      text: 'Fuck you',
-    },
-    {
-      id: 2,
-      name: 'Carter Hayes',
-      text: 'Here is some meta',
-    },
-  ];
+
+  const {getMessages} = useUserService();
+
+  const [messages, setMessages] = useState<MessageProps[]>([]);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const data = await getMessages();
+        setMessages(data);
+      } catch (error) {
+        console.error('Failed to fetch characters:', error);
+      }
+    };
+
+    fetchMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -16,10 +16,17 @@ import LinearGradient from 'react-native-linear-gradient';
 import ContactNewModal from './ContactNewModal';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {useNotification} from '../../context/NotificationContext';
+import {useUserService} from '../../services/UserService';
+import ContactMessageNewModal from './ContactMessageNewModal';
 
 type ContactProps = {id: number; name: string; number: string};
 
 const Contact = ({id, name, number}: ContactProps) => {
+  const newMessageContactModalRef = useRef<BottomSheetModal>(null);
+  const handleMessagePress = async () => {
+    // @ts-ignore
+    newMessageContactModalRef.current.openModal();
+  };
   const showNotification = useNotification();
   const getInitials = (nameString: string) => {
     const words = nameString.split(' ');
@@ -33,79 +40,95 @@ const Contact = ({id, name, number}: ContactProps) => {
   const initials = getInitials(name);
 
   return (
-    <View
-      key={id}
-      style={tw`flex-row rounded-lg justify-between my-2 bg-[#262631]`}>
-      <View style={tw`flex-row`}>
-        <View
-          style={tw`rounded-r-full h-20 w-20 items-center justify-center bg-[rgba(24,24,36,255)]`}>
+    <>
+      <View
+        key={id}
+        style={tw`flex-row rounded-lg justify-between my-2 bg-[#262631]`}>
+        <View style={tw`flex-row`}>
           <View
-            style={tw`rounded-full h-16.5 w-16.5 items-center justify-center bg-[#262631]`}>
-            <LinearGradient
-              colors={['#00f7ba', '#00a3f5']}
-              style={tw`rounded-full h-12 w-12 items-center justify-center`}>
-              <Text style={tw`text-white font-extrabold text-xl`}>
-                {initials}
-              </Text>
-            </LinearGradient>
+            style={tw`rounded-r-full h-20 w-20 items-center justify-center bg-[rgba(24,24,36,255)]`}>
+            <View
+              style={tw`rounded-full h-16.5 w-16.5 items-center justify-center bg-[#262631]`}>
+              <LinearGradient
+                colors={['#00f7ba', '#00a3f5']}
+                style={tw`rounded-full h-12 w-12 items-center justify-center`}>
+                <Text style={tw`text-white font-extrabold text-xl`}>
+                  {initials}
+                </Text>
+              </LinearGradient>
+            </View>
+          </View>
+          <View style={tw`my-auto ml-3`}>
+            <Text style={tw`text-white font-medium text-lg`}>{name}</Text>
+            <Text style={tw`text-[#808087] text-base -mt-1`}>{number}</Text>
           </View>
         </View>
-        <View style={tw`my-auto ml-3`}>
-          <Text style={tw`text-white font-medium text-lg`}>{name}</Text>
-          <Text style={tw`text-[#808087] text-base -mt-1`}>{number}</Text>
+        <View style={tw`mr-2 items-center justify-center my-auto`}>
+          <TouchableOpacity
+            onPress={() =>
+              showNotification(
+                'Action unavaliable',
+                'You cant call someone, dumbass.',
+              )
+            }
+            style={tw`bg-[#4dc3a5] p-2 rounded-lg items-center justify-center mb-1`}>
+            <FontAwesome6
+              name={'phone'}
+              size={15}
+              color="#a6e1d2"
+              style={tw`ml-0.5`}
+              solid
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleMessagePress}
+            style={tw`bg-[#9b693e] p-2 rounded-lg items-center justify-center`}>
+            <FontAwesome6
+              name={'message'}
+              size={15}
+              color="#ceb49f"
+              style={tw`ml-0.5`}
+              solid
+            />
+          </TouchableOpacity>
         </View>
       </View>
-      <View style={tw`mr-2 items-center justify-center my-auto`}>
-        <TouchableOpacity
-          onPress={() =>
-            showNotification(
-              'Action unavaliable',
-              'You cant call someone, dumbass.',
-            )
-          }
-          style={tw`bg-[#4dc3a5] p-2 rounded-lg items-center justify-center mb-1`}>
-          <FontAwesome6
-            name={'phone'}
-            size={15}
-            color="#a6e1d2"
-            style={tw`ml-0.5`}
-            solid
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => console.log('Message button pressed')}
-          style={tw`bg-[#9b693e] p-2 rounded-lg items-center justify-center`}>
-          <FontAwesome6
-            name={'message'}
-            size={15}
-            color="#ceb49f"
-            style={tw`ml-0.5`}
-            solid
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
+      <ContactMessageNewModal
+        ref={newMessageContactModalRef}
+        id={id}
+        name={name}
+        number={number}
+      />
+    </>
   );
 };
 
 const ContactsListScreen = () => {
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const handlePresentPress = async () => {
+  const newContactModalRef = useRef<BottomSheetModal>(null);
+
+  const handleNewContactPress = async () => {
     // @ts-ignore
-    bottomSheetModalRef.current.openModal();
+    newContactModalRef.current.openModal();
   };
-  const contacts = [
-    {
-      id: 1,
-      name: 'Austin Bean',
-      number: '(420) 492-2823',
-    },
-    {
-      id: 2,
-      name: 'Carter Hayes',
-      number: '(420) 435-7334',
-    },
-  ];
+
+  const {getContacts} = useUserService();
+
+  const [contacts, setContacts] = useState<ContactProps[]>([]);
+
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        const data = await getContacts();
+        setContacts(data);
+        console.log(data);
+      } catch (error) {
+        console.error('Failed to fetch characters:', error);
+      }
+    };
+
+    fetchContacts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -114,7 +137,7 @@ const ContactsListScreen = () => {
           <View style={tw`mt-5 flex-row justify-between`}>
             <Text style={tw`text-white text-3xl font-medium`}>Contacts</Text>
             <TouchableOpacity
-              onPress={handlePresentPress}
+              onPress={handleNewContactPress}
               style={tw`bg-[#4dc3a5] p-2 rounded-lg items-center justify-center h-10 w-10`}>
               <Ionicons
                 name={'person-add'}
@@ -148,7 +171,7 @@ const ContactsListScreen = () => {
           <HomeButton />
         </SafeAreaView>
       </View>
-      <ContactNewModal ref={bottomSheetModalRef} />
+      <ContactNewModal ref={newContactModalRef} />
     </>
   );
 };

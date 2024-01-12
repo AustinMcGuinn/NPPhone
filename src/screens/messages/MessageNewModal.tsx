@@ -26,6 +26,10 @@ const MessageNewModal = React.forwardRef(({}, ref) => {
     console.log('handleSheetChanges', index);
   }, []);
 
+  const handleClosePress = useCallback(() => {
+    bottomSheetModalRef.current?.close();
+  }, []);
+
   return (
     <BottomSheetModal
       ref={bottomSheetModalRef}
@@ -65,7 +69,7 @@ const MessageNewModal = React.forwardRef(({}, ref) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={tw`bg-[#f86969] flex-row p-2 rounded-lg items-center justify-around flex-1 ml-2`}
-            onPress={() => console.log('Search button pressed')}>
+            onPress={handleClosePress}>
             <Text style={tw`text-white text-3xl font-light`}>Cancel</Text>
             <FontAwesome6 name="x" size={20} color="#ffffff" />
           </TouchableOpacity>

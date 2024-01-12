@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   SafeAreaView,
@@ -11,6 +11,7 @@ import tw from '../../../../tailwind';
 import {useAuth} from '../../../context/AuthContext';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {useUserService} from '../../../services/UserService';
 
 type CharacterProps = {id: number; name: string; number: string};
 
@@ -95,18 +96,23 @@ const CharacterListFooter = () => {
 };
 
 const CharacterSelectScreen = () => {
-  const characters = [
-    {
-      id: 1,
-      name: 'Austin Bean',
-      number: '(420) 492-2823',
-    },
-    {
-      id: 2,
-      name: 'Carter Hayes',
-      number: '(420) 435-7334',
-    },
-  ];
+  const {getCharacters} = useUserService();
+
+  const [characters, setCharacters] = useState<CharacterProps[]>([]);
+
+  useEffect(() => {
+    const fetchCharacters = async () => {
+      try {
+        const chars = await getCharacters();
+        setCharacters(chars);
+      } catch (error) {
+        console.error('Failed to fetch characters:', error);
+      }
+    };
+
+    fetchCharacters();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View style={tw`flex-1 bg-[rgba(24,24,36,255)]`}>

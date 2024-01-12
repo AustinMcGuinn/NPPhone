@@ -1,43 +1,36 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import tw from '../../../tailwind';
 import LinearGradient from 'react-native-linear-gradient';
 import HomeButton from '../../components/ui/HomeButton';
+import {useUserService} from '../../services/UserService';
+
+// info type
+type InfoType = {text: string; value: string};
+// licence type
+type LicenceType = {text: string; valid: boolean};
 
 const InfoScreen = () => {
-  const info = [
-    {
-      text: 'Apartment',
-      value: 'A420',
-    },
-    {
-      text: 'State Id',
-      value: '2303',
-    },
-    {
-      text: 'Bank Account ID',
-      value: '61904229',
-    },
-    {
-      text: 'Phone Number',
-      value: '(420) 162-2456',
-    },
-    {
-      text: 'Bank Balance',
-      value: '$4,133.00',
-    },
-  ];
+  const {getCharacterInfo} = useUserService();
 
-  const licences = [
-    {
-      text: 'Drivers License',
-      valid: true,
-    },
-    {
-      text: 'Weapons License',
-      valid: false,
-    },
-  ];
+  const [info, setInfo] = useState<InfoType[]>([]);
+  const [licences, setLicences] = useState<LicenceType[]>([]);
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      try {
+        const data = await getCharacterInfo();
+        console.log('data', data);
+        setInfo(data.info || []); // Fallback to empty array if undefined
+        setLicences(data.licences || []); // Fallback to empty array if undefined
+      } catch (error) {
+        console.error('Failed to fetch character info:', error);
+      }
+    };
+
+    fetchInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <LinearGradient
@@ -62,7 +55,7 @@ const InfoScreen = () => {
         </View>
 
         <View style={tw`mt-6`}>
-          <Text style={tw`text-white text-2xl font-medium mb-2`}>Info</Text>
+          <Text style={tw`text-white text-2xl font-medium mb-2`}>Licences</Text>
           {licences.map((item, index) => (
             <View
               key={index}
