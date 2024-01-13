@@ -5,6 +5,7 @@ import {
   characterDataDummy,
   charactersDummy,
   contactsDummy,
+  conversationDummy,
   messagesDummy,
 } from './dummyData';
 
@@ -125,10 +126,38 @@ export const useUserService = () => {
     }
   };
 
+  const getConversation = async () => {
+    if (useDummyData) {
+      return conversationDummy;
+    }
+
+    const jwt = await getData('jwt');
+    try {
+      const response = await fetch(`${API_URL}/GetConversation`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify({characterId: character.id}),
+      });
+      if (!response.ok) {
+        showNotification('Error', 'Error fetching contacts');
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      showNotification('Error', 'Error fetching contacts');
+      console.log(error);
+    }
+  };
+
   return {
     getCharacters,
     getMessages,
     getCharacterInfo,
     getContacts,
+    getConversation,
   };
 };

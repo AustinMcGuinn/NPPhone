@@ -15,7 +15,7 @@ const AuthHome = () => {
 
   return (
     <View style={tw`flex-1 bg-[rgba(24,24,36,255)]`}>
-      <SafeAreaView style={tw`flex-1 m-7`}>
+      <SafeAreaView style={tw`flex-1 mx-4 my-7`}>
         {/* Time and date */}
         <View style={tw`flex-9 items-center justify-center`}>
           <Image

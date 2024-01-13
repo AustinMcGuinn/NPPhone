@@ -45,7 +45,7 @@ const SettingsScreen = () => {
       colors={['#20293F', '#191a28', '#202b41']}
       style={tw`flex-1`}>
       <View style={tw`flex-1 bg-black/20`}>
-        <SafeAreaView style={tw`flex-1 m-7`}>
+        <SafeAreaView style={tw`flex-1 mx-4 my-7`}>
           <Text style={tw`text-white text-2xl font-medium mt-5`}>Settings</Text>
           <View style={tw`mt-5`}>
             {buttons.map((item, index) => (

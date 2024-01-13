@@ -7,6 +7,7 @@ import SettingsScreen from '../screens/settings/SettingsScreen';
 import InfoScreen from '../screens/info/InfoScreen';
 import MessageListScreen from '../screens/messages/MessageListScreen';
 import ContactsListScreen from '../screens/contacts/ContactsListScreen';
+import MessageScreen from '../screens/messages/MessageScreen';
 
 const MainStack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const MainStackNavigation = () => {
       <MainStack.Screen name="Settings" component={SettingsScreen} />
       <MainStack.Screen name="Info" component={InfoScreen} />
       <MainStack.Screen name="MessageList" component={MessageListScreen} />
+      <MainStack.Screen name="MessageConversation" component={MessageScreen} />
       <MainStack.Screen name="ContactsList" component={ContactsListScreen} />
     </MainStack.Navigator>
   );

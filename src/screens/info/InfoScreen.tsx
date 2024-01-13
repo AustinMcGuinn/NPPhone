@@ -36,7 +36,7 @@ const InfoScreen = () => {
     <LinearGradient
       colors={['#20293F', '#191a28', '#202b41']}
       style={tw`flex-1`}>
-      <SafeAreaView style={tw`flex-1 m-7`}>
+      <SafeAreaView style={tw`flex-1 mx-4 my-7`}>
         {/* Time and date */}
         <Text style={tw`text-white text-3xl font-medium mt-5`}>Details</Text>
         {/*  */}

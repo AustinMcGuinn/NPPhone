@@ -49,7 +49,7 @@ const ContactMessageNewModal = React.forwardRef(
             <TextInput
               multiline={true}
               numberOfLines={4}
-              style={tw`text-white text-xl h-40`}
+              style={tw`text-black text-xl h-40`}
             />
           </View>
           <View style={tw`flex-row mt-3`}>

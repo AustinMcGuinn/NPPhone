@@ -133,7 +133,7 @@ const ContactsListScreen = () => {
   return (
     <>
       <View style={tw`flex-1  bg-[rgba(24,24,36,255)]`}>
-        <SafeAreaView style={tw`flex-1 m-7`}>
+        <SafeAreaView style={tw`flex-1 mx-4 my-7`}>
           <View style={tw`mt-5 flex-row justify-between`}>
             <Text style={tw`text-white text-3xl font-medium`}>Contacts</Text>
             <TouchableOpacity
@@ -149,7 +149,7 @@ const ContactsListScreen = () => {
           </View>
           <View style={tw`relative mt-5`}>
             <TextInput
-              style={tw`border-4 border-[#262631] rounded-lg p-3 text-white text-xl`}
+              style={tw`border-4 border-[#262631] rounded-lg p-3 text-black text-xl`}
               placeholder="Search"
               placeholderTextColor="#757575"
             />
@@ -159,7 +159,7 @@ const ContactsListScreen = () => {
               <FontAwesome5 name="search" size={20} color="#60606b" />
             </TouchableOpacity>
           </View>
-          <View style={tw`flex-1 mt-5`}>
+          <View style={tw`flex-1 mt-5 mb-3`}>
             <FlatList
               data={contacts}
               renderItem={({item}) => (

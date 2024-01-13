@@ -43,7 +43,7 @@ const MessageNewModal = React.forwardRef(({}, ref) => {
 
         <View style={tw`relative mt-5`}>
           <TextInput
-            style={tw`bg-[#f0f0f0] rounded-lg p-3 text-white text-xl`}
+            style={tw`bg-[#f0f0f0] rounded-lg p-3 text-black text-xl`}
             placeholder="Number"
             placeholderTextColor="#757575"
           />
@@ -57,7 +57,7 @@ const MessageNewModal = React.forwardRef(({}, ref) => {
           <TextInput
             multiline={true}
             numberOfLines={4}
-            style={tw`text-white text-xl h-40`}
+            style={tw`text-black text-xl h-40`}
           />
         </View>
         <View style={tw`flex-row mt-3`}>

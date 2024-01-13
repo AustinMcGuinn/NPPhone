@@ -41,14 +41,14 @@ const ContactNewModal = React.forwardRef(({}, ref) => {
         </View>
         <View style={tw`relative mt-5`}>
           <TextInput
-            style={tw`bg-[#f0f0f0] rounded-lg p-3 text-white text-xl`}
+            style={tw`bg-[#f0f0f0] rounded-lg p-3 text-black text-xl`}
             placeholder="(000) 000-0000"
             placeholderTextColor="#757575"
           />
         </View>
         <View style={tw`mt-3 bg-[#f0f0f0] rounded-lg p-3`}>
           <TextInput
-            style={tw`text-white text-xl`}
+            style={tw`text-black text-xl`}
             placeholder="Name of contact"
             placeholderTextColor="#757575"
           />

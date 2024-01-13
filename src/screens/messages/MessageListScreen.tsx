@@ -15,14 +15,21 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import MessageNewModal from './MessageNewModal';
 import {useUserService} from '../../services/UserService';
+import {useNavigation} from '@react-navigation/native';
 
 type MessageProps = {id: number; name: string; text: string};
 
 const Message = ({id, name, text}: MessageProps) => {
+  const navigation = useNavigation();
+
+  const handleMessagePress = () => {
+    // @ts-ignore
+    navigation.navigate('MessageConversation');
+  };
   return (
     <TouchableOpacity
       key={id}
-      onPress={() => console.log('Message button pressed')}
+      onPress={handleMessagePress}
       style={tw`flex-row rounded-lg justify-between my-2 bg-[#262631]`}>
       <View style={tw`flex-row`}>
         <View
@@ -77,7 +84,7 @@ const MessageListScreen = () => {
   return (
     <>
       <View style={tw`flex-1  bg-[rgba(24,24,36,255)]`}>
-        <SafeAreaView style={tw`flex-1 m-7`}>
+        <SafeAreaView style={tw`flex-1 mx-4 my-7`}>
           <View style={tw`mt-5 flex-row justify-between`}>
             <Text style={tw`text-white text-3xl font-medium`}>Messages</Text>
             <TouchableOpacity
@@ -94,7 +101,7 @@ const MessageListScreen = () => {
           </View>
           <View style={tw`relative mt-5`}>
             <TextInput
-              style={tw`border-4 border-[#262631] rounded-lg p-3 text-white text-xl`}
+              style={tw`border-4 border-[#262631] rounded-lg p-3 text-black text-xl`}
               placeholder="Search"
               placeholderTextColor="#757575"
             />
